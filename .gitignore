@@ -1,0 +1,24 @@
+### VSCODE ###
+.vscode/
+
+### INTELLIJ ###
+.idea
+*.iws
+*.iml
+*.ipr
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/resources/application.properties
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
