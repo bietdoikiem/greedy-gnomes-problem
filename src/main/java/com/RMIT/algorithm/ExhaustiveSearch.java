@@ -3,7 +3,7 @@ package com.RMIT.algorithm;
 public class ExhaustiveSearch {
   public static void main(String[] args) {
     // Define problem Matrix
-    // y = 23 x = 12
+    // x = 12, y = 23
     char[][] problemMatrix = {
         { '.', 'X', '.', '.', 'X', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'X', '.', '.', '.', '.', '.', '.', '.',
             '.' },
@@ -34,6 +34,11 @@ public class ExhaustiveSearch {
     displayMatrix(problemMatrix);
   }
 
+  /**
+   * Display matrix in console
+   * 
+   * @param matrix Array of characters to be displayed
+   */
   public static void displayMatrix(char[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
