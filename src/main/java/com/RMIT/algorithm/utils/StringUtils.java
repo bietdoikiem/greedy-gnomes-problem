@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class StringUtils {
 
   /**
-   * Get Number from string
+   * Gets Number from string
    * 
    * @param str String of integer
    * @return Integer number || Error if failed!
@@ -19,7 +19,7 @@ public class StringUtils {
   }
 
   /**
-   * Check if the current String represents a number
+   * Checks if the current String represents a number
    * 
    * @param character Character to be checked
    * @return True if valid || False if not

@@ -6,61 +6,12 @@ import com.RMIT.algorithm.utils.MatrixUtils;
 import com.RMIT.algorithm.utils.StringUtils;
 
 public class ExhaustiveSearch {
-  public static void main(String[] args) throws InterruptedException {
-    // Define problem Matrix
-    // x = 12, y = 23
-    String[][] problemMatrix = {
-        { ".", "X", ".", ".", "X", ".", ".", ".", ".", ".", ".", ".", ".", ".", "X",
-            ".", ".", ".", ".", ".", ".", ".",
-            "." },
-        { ".", ".", ".", ".", ".", ".", "2", ".", ".", ".", ".", ".", ".", ".", ".",
-            ".", ".", ".", ".", ".", ".", ".",
-            "." },
-        { ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".",
-            ".", ".", "6", ".", ".", ".", ".",
-            "." },
-        { "2", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "3", ".", ".",
-            ".", ".", "1", ".", ".", ".", ".",
-            "." },
-        { ".", "X", "4", ".", ".", ".", ".", ".", ".", ".", ".", "X", ".", "X", ".",
-            ".", ".", "1", ".", ".", ".", ".",
-            "." },
-        { ".", ".", ".", ".", ".", ".", ".", "2", ".", ".", ".", ".", ".", ".", ".",
-            "X", ".", "2", ".", ".", ".", ".",
-            ".", },
-        { ".", ".", ".", "X", ".", ".", ".", ".", ".", ".", "X", ".", ".", ".", ".",
-            ".", ".", "2", "X", ".", ".", ".",
-            ".", },
-        { "2", ".", "2", ".", ".", ".", ".", ".", ".", ".", ".", "X", "4", ".", ".",
-            "1", ".", ".", ".", ".", ".", ".",
-            ".", },
-        { ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".",
-            ".", ".", ".", ".", ".", ".", ".",
-            ".", },
-        { ".", ".", ".", "X", ".", ".", "3", ".", ".", ".", ".", ".", ".", ".", ".",
-            ".", "2", ".", ".", ".", ".", ".",
-            ".", },
-        { "1", ".", ".", "X", ".", ".", ".", ".", ".", ".", "2", ".", ".", ".", ".",
-            ".", ".", "3", ".", ".", "X", ".",
-            ".", },
-        { "2", "X", "X", "X", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".",
-            "X", ".", ".", ".", ".", ".", "X",
-            "." }
-    };
-    String[][] simpleMatrix = {
-        { ".", "2", "" },
-        { ".", "X", "3" },
-        { "6", ".", "X" }
-    };
-    exhaustiveSearch(problemMatrix);
-
-  }
 
   /* * Declaration of constants * */
-  static final String ROCK_SYMBOL = "X";
-  static final String TRAIL_GOLD_SYMBOL = "G";
-  static final String TRAIL_VISITED_SYMBOL = "+";
-  static final String TRAIL_UNVISITED_SYMBOL = ".";
+  public static final String ROCK_SYMBOL = "X";
+  public static final String TRAIL_GOLD_SYMBOL = "G";
+  public static final String TRAIL_VISITED_SYMBOL = "+";
+  public static final String TRAIL_UNVISITED_SYMBOL = ".";
 
   /**
    * Optimal Solution class for Greedy Gnome problem
@@ -70,9 +21,13 @@ public class ExhaustiveSearch {
     public int steps;
     public String[][] matrix;
 
-    public OptimalSolution() {
-    }
-
+    /**
+     * Construct an optimal solution data type, including optimal matrix, gold and
+     * steps.
+     * 
+     * @param rows
+     * @param cols
+     */
     public OptimalSolution(int rows, int cols) {
       matrix = new String[rows][cols];
       golds = 0;
@@ -85,17 +40,22 @@ public class ExhaustiveSearch {
    * 
    * @param matrix
    */
-  public static void exhaustiveSearch(String[][] matrix) {
+  public static void solve(String[][] matrix) {
 
     int[] matrixSize = MatrixUtils.getSize(matrix);
     OptimalSolution solution = new OptimalSolution(matrixSize[0], matrixSize[1]);
-    // Pre-fill solution array
+    String[][] currentMatrix = new String[matrixSize[0]][matrixSize[1]];
+    // Pre-fill matrix with dots
     Arrays.stream(solution.matrix).forEach(a -> Arrays.fill(a, TRAIL_UNVISITED_SYMBOL));
+    Arrays.stream(currentMatrix).forEach(a -> Arrays.fill(a, TRAIL_UNVISITED_SYMBOL));
+    // Solving the problem
     System.out.println("Solving the Greedy Gnomes Problem... ⏳");
-    // Init indicator
-    LoadingIndicator indicator = new LoadingIndicator();
-    scout(0, 0, matrix, solution, 0, 0);
-    System.out.println("Optimal Gold 🪙: " + solution.golds + " - Optimal Steps 👣: " + solution.steps);
+    LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
+    scout(0, 0, matrix, solution, 0, 0, currentMatrix);
+    System.out.println("Optimal Gold 🪙: " + solution.golds);
+    System.out.println("Optimal Steps 👣: " + solution.steps);
+    System.out.println("Optimal Path 🧩:");
+    MatrixUtils.display(solution.matrix);
     indicator.stop();
   }
 
@@ -105,11 +65,10 @@ public class ExhaustiveSearch {
    * @param x      X Coordinate
    * @param y      Y Coordinate
    * @param matrix Matrix to be scouted
-   * @return True if scout-able || False if not
    */
   public static void scout(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
-      int currentSteps) {
-    // Check if current trail of path is NOT SAFE! (Store & Reset)
+      int currentSteps, String[][] currentMatrix) {
+    // Check if current trail of path is NOT SAFE!
     if (!isSafe(x, y, matrix)) {
       return;
     }
@@ -119,28 +78,22 @@ public class ExhaustiveSearch {
     // Increase golds (if any) & Mark trail as visited
     if (StringUtils.isNumeric(matrix[x][y])) {
       currentGold += StringUtils.parseInt(matrix[x][y]);
-      solution.matrix[x][y] = TRAIL_GOLD_SYMBOL; // Mark 'G'
+      currentMatrix[x][y] = TRAIL_GOLD_SYMBOL;
     } else {
-      solution.matrix[x][y] = TRAIL_VISITED_SYMBOL; // Mark '+'
+      currentMatrix[x][y] = TRAIL_VISITED_SYMBOL;
     }
     /// Store the current path's state if it maximizes the gold collected
     if (currentGold > solution.golds) {
       solution.golds = currentGold;
       solution.steps = currentSteps;
+      solution.matrix = MatrixUtils.clone(currentMatrix);
     }
-    /* * BEGIN Debug * */
-    // System.out.println(
-    // "Current Gold 🪙: " + currentGold + " - Current Steps 👣: " + currentSteps);
-    // MatrixUtils.display(solution.matrix);
-    // System.out.println("----------------------------------------------");
-    /* * END Debug * */
     // Go DOWN
-    scout(x + 1, y, matrix, solution, currentGold, currentSteps);
+    scout(x + 1, y, matrix, solution, currentGold, currentSteps, currentMatrix);
     // Go RIGHT
-    scout(x, y + 1, matrix, solution, currentGold, currentSteps);
-
+    scout(x, y + 1, matrix, solution, currentGold, currentSteps, currentMatrix);
     // Backtrack visited path
-    solution.matrix[x][y] = TRAIL_UNVISITED_SYMBOL;
+    currentMatrix[x][y] = TRAIL_UNVISITED_SYMBOL;
   }
 
   /**

@@ -1,7 +1,10 @@
 package com.RMIT.algorithm;
 
+import com.RMIT.algorithm.utils.MatrixUtils;
+
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Welcome to Group assignment of COSC2658 course");
+    String[][] problemMatrix = MatrixUtils.parseFromFile(args[0]);
+    ExhaustiveSearch.solve(problemMatrix);
   }
 }
