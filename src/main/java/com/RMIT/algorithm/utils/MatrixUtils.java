@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 
 import com.RMIT.algorithm.configs.Configs;
+import com.RMIT.algorithm.enums.MatrixSymbol;
 
 public class MatrixUtils {
 
@@ -58,7 +59,7 @@ public class MatrixUtils {
    */
   public static void fill(String[][] matrix, String content) {
     if (matrix == null) {
-      throw new Error("MATRIX ERROR❗ Matrix is null");
+      throw new Error("MATRIX ERROR! Matrix is null");
     }
     int[] matrixSize = MatrixUtils.getSize(matrix);
     for (int i = 0; i < matrixSize[0]; i++) {
@@ -86,7 +87,7 @@ public class MatrixUtils {
       int cols = StringUtils.parseInt(sizeStr[1]);
       if (rows > Configs.getMaxRows() || cols > Configs.getMaxCols()) {
         sc.close();
-        throw new Error("MATRIX ERROR❗ Given matrix has exceeded the maximum allowance size (27, 27)");
+        throw new Error("MATRIX ERROR! Given matrix has exceeded the maximum allowance size (27, 27)");
       }
       // Init matrix 2D Array
       String[][] matrix = new String[rows][cols];
@@ -97,16 +98,27 @@ public class MatrixUtils {
         String[] tokens = data.split(" ");
         // Fill the matrix
         for (int i = 0; i < tokens.length; i++) {
+          if (!isValidMatrixSymbol(tokens[i])) {
+            sc.close();
+            throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+          }
           matrix[currentRow][i] = tokens[i];
         }
         currentRow++;
       }
-      sc.close(); // Close resource
+      sc.close();
       return matrix;
     } catch (Exception e) {
-      System.out.println(String.format("MATRIX ERROR❗ Cannot read file (%s)", e.getMessage()));
+      System.out.println(String.format("MATRIX ERROR! Cannot read file %s", e.getMessage()));
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static boolean isValidMatrixSymbol(String symbol) {
+    return symbol.equalsIgnoreCase(MatrixSymbol.GOLD.toString())
+        || symbol.equalsIgnoreCase(MatrixSymbol.ROCK.toString())
+        || symbol.equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())
+        || symbol.equalsIgnoreCase(MatrixSymbol.VISITED.toString());
   }
 }

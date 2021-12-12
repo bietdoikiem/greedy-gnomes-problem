@@ -21,6 +21,11 @@ public class ExhaustiveSearch {
     public String[][] matrix;
     public String path;
 
+    public OptimalSolution() {
+      golds = 0;
+      steps = 0;
+    }
+
     /**
      * Construct an optimal solution data type, including optimal matrix, gold and
      * steps.
@@ -36,29 +41,17 @@ public class ExhaustiveSearch {
   }
 
   /**
-   * Exhaustively search for the optimal solution for our friend, Gnome!
+   * Exhaustively search for the optimal solution for our friend, Gnome! (Solve
+   * the problem only => Slightly higher time efficiency)
    * 
    * @param matrix
    */
-  public static OptimalSolution solve(String[][] matrix, boolean hasVisual) {
-
-    int[] matrixSize = MatrixUtils.getSize(matrix);
-    OptimalSolution solution = new OptimalSolution(matrixSize[0], matrixSize[1]);
-    String[][] currentMatrix = new String[matrixSize[0]][matrixSize[1]];
+  public static OptimalSolution solve(String[][] matrix) {
+    OptimalSolution solution = new OptimalSolution();
     StringBuilder pathBuilder = new StringBuilder();
-    // Clone matrixes from the original one
-    solution.matrix = MatrixUtils.clone(matrix);
-    currentMatrix = MatrixUtils.clone(matrix);
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnomes Problem... ⏳");
-    LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
-    if (hasVisual == true) {
-      visualScout(0, 0, matrix, solution, 0, 0, null, pathBuilder, currentMatrix);
-    } else {
-      scout(0, 0, matrix, solution, 0, 0, null, pathBuilder);
-    }
-
-    indicator.stop();
+    System.out.println("Solving the Greedy Gnome Problem...⏳");
+    scout(0, 0, matrix, solution, 0, 0, null, pathBuilder);
     return solution;
   }
 
@@ -102,6 +95,30 @@ public class ExhaustiveSearch {
   }
 
   /**
+   * Exhaustively search for the optimal solution for our friend, Gnome! (With
+   * visualizations for CLI such as loading bar, matrix path, etc. => Slightly
+   * slower time
+   * efficiency)
+   * 
+   * @param matrix
+   */
+  public static OptimalSolution solveCLI(String[][] matrix) {
+    int[] matrixSize = MatrixUtils.getSize(matrix);
+    OptimalSolution solution = new OptimalSolution(matrixSize[0], matrixSize[1]);
+    String[][] currentMatrix = new String[matrixSize[0]][matrixSize[1]];
+    StringBuilder pathBuilder = new StringBuilder();
+    // Clone matrixes from the original one
+    solution.matrix = MatrixUtils.clone(matrix);
+    currentMatrix = MatrixUtils.clone(matrix);
+    // Run the problem solver
+    System.out.println("Solving the Greedy Gnome Problem...⏳");
+    LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
+    scoutCLI(0, 0, matrix, solution, 0, 0, null, pathBuilder, currentMatrix);
+    indicator.stop();
+    return solution;
+  }
+
+  /**
    * Scout the matrix to find all possible paths for Mr. Gnome (visualizations of
    * path in matrix included!)
    * 
@@ -109,7 +126,7 @@ public class ExhaustiveSearch {
    * @param y      Y Coordinate
    * @param matrix Matrix to be scouted
    */
-  public static void visualScout(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
+  public static void scoutCLI(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
       int currentSteps, Direction currentDirection, StringBuilder pathBuilder, String[][] currentMatrix) {
     // Check if current trail of path is NOT SAFE!
     if (!isSafe(x, y, matrix)) {
@@ -140,9 +157,9 @@ public class ExhaustiveSearch {
       solution.matrix = MatrixUtils.clone(currentMatrix);
     }
     // Go DOWN
-    visualScout(x + 1, y, matrix, solution, currentGold, currentSteps, Direction.DOWN, pathBuilder, currentMatrix);
+    scoutCLI(x + 1, y, matrix, solution, currentGold, currentSteps, Direction.DOWN, pathBuilder, currentMatrix);
     // Go RIGHT
-    visualScout(x, y + 1, matrix, solution, currentGold, currentSteps, Direction.RIGHT, pathBuilder, currentMatrix);
+    scoutCLI(x, y + 1, matrix, solution, currentGold, currentSteps, Direction.RIGHT, pathBuilder, currentMatrix);
     // Backtrack visited paths
     if (pathBuilder.length() > 0)
       pathBuilder.deleteCharAt(pathBuilder.length() - 1);

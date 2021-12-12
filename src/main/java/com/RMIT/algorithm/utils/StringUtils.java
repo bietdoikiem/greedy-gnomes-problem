@@ -10,7 +10,7 @@ public class StringUtils {
    */
   public static int parseInt(String str) {
     if (str == null) {
-      throw new Error("ERROR❗ String is null");
+      throw new Error("STRING ERROR! String is null");
     }
     int number = Integer.parseInt(str);
     return number;
