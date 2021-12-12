@@ -16,13 +16,13 @@ public class ExhaustiveSearch {
    * Optimal Solution class for Greedy Gnome problem
    */
   static class OptimalSolution {
-    public int golds;
+    public int gold;
     public int steps;
     public String[][] matrix;
     public String path;
 
     public OptimalSolution() {
-      golds = 0;
+      gold = 0;
       steps = 0;
     }
 
@@ -35,7 +35,7 @@ public class ExhaustiveSearch {
      */
     public OptimalSolution(int rows, int cols) {
       matrix = new String[rows][cols];
-      golds = 0;
+      gold = 0;
       steps = 0;
     }
   }
@@ -80,8 +80,8 @@ public class ExhaustiveSearch {
     if (StringUtils.isNumeric(matrix[x][y]))
       currentGold += StringUtils.parseInt(matrix[x][y]);
     /// Store the current path's state if it maximizes the gold collected
-    if (currentGold > solution.golds) {
-      solution.golds = currentGold;
+    if (currentGold > solution.gold) {
+      solution.gold = currentGold;
       solution.steps = currentSteps;
       solution.path = pathBuilder.toString();
     }
@@ -150,8 +150,8 @@ public class ExhaustiveSearch {
       ;
     }
     /// Store the current path's state if it maximizes the gold collected
-    if (currentGold > solution.golds) {
-      solution.golds = currentGold;
+    if (currentGold > solution.gold) {
+      solution.gold = currentGold;
       solution.steps = currentSteps;
       solution.path = pathBuilder.toString();
       solution.matrix = MatrixUtils.clone(currentMatrix);
