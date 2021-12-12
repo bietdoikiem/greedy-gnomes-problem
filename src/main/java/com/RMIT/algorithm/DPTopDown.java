@@ -27,7 +27,7 @@ public class DPTopDown {
 
   static int[][] read_sample_file() throws FileNotFoundException {
 
-    File myObj = new File("/Users/thien/Desktop/cosc2658-group-asm/src/main/java/resources/sample1.txt");
+    File myObj = new File("src/main/resources/sample-12x23.txt");
     Scanner myReader = new Scanner(myObj);
     n_rows = Integer.parseInt(myReader.next());
     n_columns = Integer.parseInt(myReader.nextLine().strip());
