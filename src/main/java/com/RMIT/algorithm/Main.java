@@ -18,5 +18,11 @@ public class Main {
     // Guider solutionFinder = new Guider(matrix);
     // solutionFinder.buildGuide(true);
     // solutionFinder.printResults();
+    /* * Mi/Exhaustive Search * */
+    // AltExhaustiveSearch es = new AltExhaustiveSearch();
+    // String inputFile = new String(args[0]);
+    // String[][] board = es.readFile(inputFile);
+    // es.displayBoard(board);
+    // es.exhaustiveSearch(board);
   }
 }
