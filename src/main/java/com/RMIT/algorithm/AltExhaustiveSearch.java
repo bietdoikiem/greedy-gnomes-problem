@@ -15,22 +15,22 @@ public class AltExhaustiveSearch {
     rows = sc.nextInt();
     cols = sc.nextInt();
     board = new String[rows][cols];
-    int current_row = 0;
-    int current_col = 0;
+    int curRow = 0;
+    int curCol = 0;
     while (sc.hasNextLine()) {
-      if (current_col == cols) {
-        current_col = 0;
-        current_row++;
+      if (curCol == cols) {
+        curCol = 0;
+        curRow++;
       }
       String data = sc.next();
       if (data.charAt(0) == '.') {
-        board[current_row][current_col] = ".";
+        board[curRow][curCol] = ".";
       } else if (data.charAt(0) == 'x') {
-        board[current_row][current_col] = "x";
+        board[curRow][curCol] = "x";
       } else {
-        board[current_row][current_col] = String.valueOf(data);
+        board[curRow][curCol] = String.valueOf(data);
       }
-      current_col++;
+      curCol++;
     }
     sc.close();
     return board;
@@ -40,15 +40,6 @@ public class AltExhaustiveSearch {
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
         System.out.print(board[i][j] + " ");
-        // if (board[i][j] == "0"){
-        // System.out.print("XX ");
-        // }
-        // else if (Integer.parseInt(board[i][j]) < 10){
-        // System.out.print(board[i][j] + " ");
-        // }
-        // else {
-        // System.out.print(board[i][j] + " ");
-        // }
       }
       System.out.println();
     }
