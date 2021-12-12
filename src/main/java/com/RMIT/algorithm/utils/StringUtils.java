@@ -1,7 +1,5 @@
 package com.RMIT.algorithm.utils;
 
-import java.util.Arrays;
-
 public class StringUtils {
 
   /**
@@ -34,12 +32,6 @@ public class StringUtils {
       return false;
     }
     return true;
-  }
-
-  public static String repeat(char c, int count) {
-    char[] arr = new char[count];
-    Arrays.fill(arr, c);
-    return new String(arr);
   }
 
 }

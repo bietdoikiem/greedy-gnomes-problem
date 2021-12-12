@@ -3,7 +3,10 @@ package com.RMIT.algorithm.utils;
 import java.io.File;
 import java.util.Scanner;
 
+import com.RMIT.algorithm.configs.Configs;
+
 public class MatrixUtils {
+
   /**
    * Returns matrix size in array: 1st element is no. of rows & 2nd element is no.
    * columns
@@ -48,6 +51,24 @@ public class MatrixUtils {
   }
 
   /**
+   * Fills the matrix with content whose data type is String
+   * 
+   * @param matrix  Matrix to be filled
+   * @param content Content to fill in
+   */
+  public static void fill(String[][] matrix, String content) {
+    if (matrix == null) {
+      throw new Error("MATRIX ERROR❗ Matrix is null");
+    }
+    int[] matrixSize = MatrixUtils.getSize(matrix);
+    for (int i = 0; i < matrixSize[0]; i++) {
+      for (int j = 0; j < matrixSize[1]; j++) {
+        matrix[i][j] = content;
+      }
+    }
+  }
+
+  /**
    * Parses matrix (2D array) from file's path
    * 
    * @param path File's path
@@ -60,8 +81,15 @@ public class MatrixUtils {
       // Read rows & columns in the 1st line of file
       String sizeData = sc.nextLine();
       String[] sizeStr = sizeData.split(" ");
+      // Validate acceptable rows & columns
+      int rows = StringUtils.parseInt(sizeStr[0]);
+      int cols = StringUtils.parseInt(sizeStr[1]);
+      if (rows > Configs.getMaxRows() || cols > Configs.getMaxCols()) {
+        sc.close();
+        throw new Error("MATRIX ERROR❗ Given matrix has exceeded the maximum allowance size (27, 27)");
+      }
       // Init matrix 2D Array
-      String[][] matrix = new String[StringUtils.parseInt(sizeStr[0])][StringUtils.parseInt(sizeStr[1])];
+      String[][] matrix = new String[rows][cols];
       int currentRow = 0;
       // Read the remaining lines for matrix data
       while (sc.hasNextLine()) {
@@ -73,11 +101,10 @@ public class MatrixUtils {
         }
         currentRow++;
       }
-      // Close resource
-      sc.close();
+      sc.close(); // Close resource
       return matrix;
     } catch (Exception e) {
-      System.out.println("ERROR❗ Cannot read file due to unexpected error.");
+      System.out.println(String.format("MATRIX ERROR❗ Cannot read file (%s)", e.getMessage()));
       e.printStackTrace();
     }
     return null;

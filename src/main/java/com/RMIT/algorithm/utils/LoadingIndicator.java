@@ -1,4 +1,4 @@
-package com.RMIT.algorithm;
+package com.RMIT.algorithm.utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -6,7 +6,10 @@ import java.util.TimerTask;
 public class LoadingIndicator {
   private String animation = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
   private int animationIndex = 0;
-  private float timeElapsed = 0; // In Second
+  private long startTime;
+  private long endTime;
+  private float timeElapsed; // In milliseconds
+  private float timeElapsedUI = 0; // In Second
   private final Timer timer;
 
   public LoadingIndicator() {
@@ -15,10 +18,20 @@ public class LoadingIndicator {
       @Override
       public void run() {
         animationIndex++;
-        timeElapsed += 0.1;
+        timeElapsedUI += 0.1;
         render();
       }
     }, 100, 100);
+    startTime = System.currentTimeMillis();
+  }
+
+  /**
+   * Retrieves total time elapsed
+   * 
+   * @return Time Elapsed
+   */
+  public float getTimeElapsed() {
+    return timeElapsed;
   }
 
   /**
@@ -28,7 +41,7 @@ public class LoadingIndicator {
     char symbol = animation.charAt(animationIndex % animation.length());
     String text = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s %.1fs \r", symbol, symbol, symbol, symbol, symbol, symbol,
         symbol,
-        symbol, symbol, symbol, symbol, symbol, symbol, symbol, timeElapsed);
+        symbol, symbol, symbol, symbol, symbol, symbol, symbol, timeElapsedUI);
     System.out.print(text);
   }
 
@@ -36,7 +49,9 @@ public class LoadingIndicator {
    * Stops the indicator and informs time elapsed
    */
   public void stop() {
-    System.out.println(String.format("Total time elapsed ⌛: %.1fs", timeElapsed));
+    endTime = System.currentTimeMillis();
+    timeElapsed = (endTime - startTime) / 1000F;
+    System.out.println(String.format("Total time elapsed ⌛: %fs", timeElapsed));
     timer.cancel();
   }
 
