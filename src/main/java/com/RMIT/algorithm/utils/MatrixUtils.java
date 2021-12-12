@@ -119,6 +119,7 @@ public class MatrixUtils {
     return symbol.equalsIgnoreCase(MatrixSymbol.GOLD.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.ROCK.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())
-        || symbol.equalsIgnoreCase(MatrixSymbol.VISITED.toString());
+        || symbol.equalsIgnoreCase(MatrixSymbol.VISITED.toString())
+        || StringUtils.isNumeric(symbol);
   }
 }

@@ -52,6 +52,33 @@ public class DPTopDown {
     return input_array;
   }
 
+  static int[][] read_file(String path) throws FileNotFoundException {
+
+    File myObj = new File(path);
+    Scanner myReader = new Scanner(myObj);
+    n_rows = Integer.parseInt(myReader.next());
+    n_columns = Integer.parseInt(myReader.nextLine().strip());
+    int i = 0, j = 0;
+    int[][] input_array = new int[n_rows][n_columns];
+    while (myReader.hasNextLine()) {
+      if (j == n_columns) {
+        j = 0;
+        i++;
+      }
+      String data = myReader.next();
+      if (data.charAt(0) == 'x')
+        input_array[i][j] = -1;
+      else if (data.charAt(0) == '.')
+        input_array[i][j] = 0;
+      else
+        input_array[i][j] = Integer.parseInt(data);
+
+      j++;
+    }
+    myReader.close();
+    return input_array;
+  }
+
   static void print_array(int[][] arr) {
     for (int i = 0; i < n_rows; i++) {
       for (int j = 0; j < n_columns; j++) {
