@@ -19,7 +19,7 @@ public class ExhaustiveSearchTest {
   @After
   public void end() {
     System.out
-        .println(String.format("DONE! Time elapsed: %fs", (System.currentTimeMillis() - startTime) / 1000F));
+        .println(String.format("TEST DONE! Time elapsed: %fs", (System.currentTimeMillis() - startTime) / 1000F));
   }
 
   @Test
