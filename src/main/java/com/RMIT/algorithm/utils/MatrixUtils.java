@@ -115,11 +115,42 @@ public class MatrixUtils {
     return null;
   }
 
+  /**
+   * Check if the matrix contain valid symbols
+   * 
+   * @param symbol
+   * @return True if valid || False if not
+   */
   public static boolean isValidMatrixSymbol(String symbol) {
     return symbol.equalsIgnoreCase(MatrixSymbol.GOLD.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.ROCK.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.VISITED.toString())
         || StringUtils.isNumeric(symbol);
+  }
+
+  /**
+   * Check if the current coordination of the matrix is safe to scout
+   * 
+   * @param x      X Coordinate
+   * @param y      Y Coordinate
+   * @param matrix Matrix to be checked
+   * @return True if safe || False if not
+   */
+  public static boolean isSafe(int x, int y, String[][] matrix) {
+    int[] matrixSize = MatrixUtils.getSize(matrix);
+    return x >= 0 && y >= 0 && x < matrixSize[0] && y < matrixSize[1]
+        && !matrix[x][y].equalsIgnoreCase(MatrixSymbol.ROCK.toString());
+  }
+
+  /**
+   * Check if it's the starting point of the Matrix (0, 0)
+   * 
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return True if at the start || False if not
+   */
+  public static boolean isStart(int x, int y) {
+    return x == 0 && y == 0;
   }
 }
