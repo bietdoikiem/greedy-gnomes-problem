@@ -49,10 +49,10 @@ public class LoadingIndicator {
    * Stops the indicator and informs time elapsed
    */
   public void stop() {
+    timer.cancel();
     endTime = System.currentTimeMillis();
     timeElapsed = (endTime - startTime) / 1000F;
     System.out.println(String.format("Total time elapsed ⌛: %fs", timeElapsed));
-    timer.cancel();
   }
 
 }

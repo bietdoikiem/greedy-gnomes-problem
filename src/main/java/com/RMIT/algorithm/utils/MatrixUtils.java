@@ -3,6 +3,7 @@ package com.RMIT.algorithm.utils;
 import java.io.File;
 import java.util.Scanner;
 
+import com.RMIT.algorithm.MemoizationSearch.Sign;
 import com.RMIT.algorithm.configs.Configs;
 import com.RMIT.algorithm.enums.MatrixSymbol;
 
@@ -28,6 +29,20 @@ public class MatrixUtils {
    * @param matrix 2D Array of characters to be displayed
    */
   public static void display(String[][] matrix) {
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        System.out.print(matrix[i][j] + " ");
+      }
+      System.out.print("\n");
+    }
+  }
+
+  /**
+   * Displays the Point matrix in console
+   * 
+   * @param matrix 2D Array of Points to be displayed
+   */
+  public static void display(Sign[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
         System.out.print(matrix[i][j] + " ");
@@ -115,11 +130,42 @@ public class MatrixUtils {
     return null;
   }
 
+  /**
+   * Check if the matrix contain valid symbols
+   * 
+   * @param symbol
+   * @return True if valid || False if not
+   */
   public static boolean isValidMatrixSymbol(String symbol) {
     return symbol.equalsIgnoreCase(MatrixSymbol.GOLD.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.ROCK.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())
         || symbol.equalsIgnoreCase(MatrixSymbol.VISITED.toString())
         || StringUtils.isNumeric(symbol);
+  }
+
+  /**
+   * Check if the current coordination of the matrix is safe to scout
+   * 
+   * @param x      X Coordinate
+   * @param y      Y Coordinate
+   * @param matrix Matrix to be checked
+   * @return True if safe || False if not
+   */
+  public static boolean isSafe(int x, int y, String[][] matrix) {
+    int[] matrixSize = MatrixUtils.getSize(matrix);
+    return x >= 0 && y >= 0 && x < matrixSize[0] && y < matrixSize[1]
+        && !matrix[x][y].equalsIgnoreCase(MatrixSymbol.ROCK.toString());
+  }
+
+  /**
+   * Check if it's the starting point of the Matrix (0, 0)
+   * 
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return True if at the start || False if not
+   */
+  public static boolean isStart(int x, int y) {
+    return x == 0 && y == 0;
   }
 }
