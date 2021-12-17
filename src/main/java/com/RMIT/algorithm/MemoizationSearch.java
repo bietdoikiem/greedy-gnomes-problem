@@ -47,7 +47,7 @@ public class MemoizationSearch {
     // Init path builder
     StringBuilder path = new StringBuilder();
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnomes Problem...⏳");
+    System.out.println("Solving...⏳");
     int mostGold = scout(0, 0, null, matrix, signs);
     // Construct optimal path from matrix of signs
     buildPath(0, 0, signs, path);
@@ -72,7 +72,7 @@ public class MemoizationSearch {
     Solution solution = new Solution(matrixSize[0], matrixSize[1]);
     // Clone solution matrix from the original one
     solution.setMatrix(MatrixUtils.clone(matrix));
-    System.out.println("Solving the Greedy Gnomes Problem...⏳");
+    System.out.println("Solving...⏳");
     LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
     int mostGold = scout(0, 0, null, matrix, signs);
     // Construct optimal path from matrix of signs

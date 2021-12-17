@@ -24,7 +24,7 @@ public class ExhaustiveSearch {
     Solution solution = new Solution();
     StringBuilder pathBuilder = new StringBuilder();
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnomes Problem...⏳");
+    System.out.println("Solving...⏳");
     scout(0, 0, matrix, solution, 0, null, pathBuilder);
     return solution;
   }
@@ -85,12 +85,14 @@ public class ExhaustiveSearch {
     int[] matrixSize = MatrixUtils.getSize(matrix);
     Solution solution = new Solution(matrixSize[0], matrixSize[1]);
     StringBuilder pathBuilder = new StringBuilder();
-    // Clone solution matrix from the original one
+    // Clone solution matrices from the original one
     solution.setMatrix(MatrixUtils.clone(matrix));
+    String[][] currentMatrix = new String[matrixSize[0]][matrixSize[1]];
+    currentMatrix = MatrixUtils.clone(matrix);
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnomes Problem...⏳");
+    System.out.println("Solving...⏳");
     LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
-    scoutCLI(0, 0, matrix, solution, 0, null, pathBuilder, matrix);
+    scoutCLI(0, 0, matrix, solution, 0, null, pathBuilder, currentMatrix);
     indicator.stop();
     return solution;
   }
