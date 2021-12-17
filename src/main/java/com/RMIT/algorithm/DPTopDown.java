@@ -162,10 +162,13 @@ public class DPTopDown {
   public static void main(String[] args) {
     try {
       int[][] a = read_sample_file();
+      long startTime = System.currentTimeMillis();
       // Calling the implemented function
-      System.out.println("Gold: " + maximum_sum_path(0, 0, a));
-      System.out.println("Steps: " + find_path(0, 0));
-      System.out.println("Path: " + path);
+      System.out.println("Optimal Gold 🪙 : " + maximum_sum_path(0, 0, a));
+      System.out.println("Optimal Steps 👣 : " + find_path(0, 0));
+      System.out.println("Optimal Path 🧩 : " + path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
+      System.out
+          .println(String.format("DONE! Time elapsed: %fs", (System.currentTimeMillis() - startTime) / 1000F));
       // print_array(path_arr);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
