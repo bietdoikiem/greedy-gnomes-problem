@@ -8,36 +8,11 @@ import com.RMIT.algorithm.utils.LoadingIndicator;
 import com.RMIT.algorithm.utils.MatrixUtils;
 import com.RMIT.algorithm.utils.StringUtils;
 
+/**
+ * Search for every possible path of the matrix to find the one that earns the
+ * maximum gold
+ */
 public class ExhaustiveSearch {
-
-  /* * Declaration of enumerates * */
-
-  /**
-   * Optimal Solution class for Greedy Gnome problem
-   */
-  static class OptimalSolution {
-    public int gold;
-    public int steps;
-    public String[][] matrix;
-    public String path;
-
-    /**
-     * Raw implementation of solution (no solution matrix visual)
-     */
-    public OptimalSolution() {
-    }
-
-    /**
-     * Construct an optimal solution data type, including optimal matrix, gold and
-     * steps.
-     * 
-     * @param rows
-     * @param cols
-     */
-    public OptimalSolution(int rows, int cols) {
-      matrix = new String[rows][cols];
-    }
-  }
 
   /**
    * Exhaustively search for the optimal solution for our friend, Gnome! (Solve
@@ -45,11 +20,11 @@ public class ExhaustiveSearch {
    * 
    * @param matrix
    */
-  public static OptimalSolution solve(String[][] matrix) {
-    OptimalSolution solution = new OptimalSolution();
+  public static Solution solve(String[][] matrix) {
+    Solution solution = new Solution();
     StringBuilder pathBuilder = new StringBuilder();
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnome Problem...⏳");
+    System.out.println("Solving the Greedy Gnomes Problem...⏳");
     scout(0, 0, matrix, solution, 0, null, pathBuilder);
     return solution;
   }
@@ -66,7 +41,7 @@ public class ExhaustiveSearch {
    * @param currentDirection Current Scouting Direction
    * @param pathBuilder      Current Path String (builder)
    */
-  public static void scout(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
+  public static void scout(int x, int y, String[][] matrix, Solution solution, int currentGold,
       Direction currentDirection, StringBuilder pathBuilder) {
     // Check if current trail of path is NOT SAFE!
     if (!MatrixUtils.isSafe(x, y, matrix)) {
@@ -83,10 +58,10 @@ public class ExhaustiveSearch {
     if (StringUtils.isNumeric(matrix[x][y]))
       currentGold += StringUtils.parseInt(matrix[x][y]);
     /// Store the current path's state if it maximizes the gold collected
-    if (currentGold > solution.gold) {
-      solution.gold = currentGold;
-      solution.steps = pathBuilder.length();
-      solution.path = pathBuilder.toString();
+    if (currentGold > solution.getGold()) {
+      solution.setGold(currentGold);
+      solution.setSteps(pathBuilder.length());
+      solution.setPath(pathBuilder.toString());
     }
     // Go DOWN
     scout(x + 1, y, matrix, solution, currentGold, Direction.DOWN, pathBuilder);
@@ -106,18 +81,16 @@ public class ExhaustiveSearch {
    * 
    * @param matrix
    */
-  public static OptimalSolution solveCLI(String[][] matrix) {
+  public static Solution solveCLI(String[][] matrix) {
     int[] matrixSize = MatrixUtils.getSize(matrix);
-    OptimalSolution solution = new OptimalSolution(matrixSize[0], matrixSize[1]);
-    String[][] currentMatrix = new String[matrixSize[0]][matrixSize[1]];
+    Solution solution = new Solution(matrixSize[0], matrixSize[1]);
     StringBuilder pathBuilder = new StringBuilder();
-    // Clone matrixes from the original one
-    solution.matrix = MatrixUtils.clone(matrix);
-    currentMatrix = MatrixUtils.clone(matrix);
+    // Clone solution matrix from the original one
+    solution.setMatrix(MatrixUtils.clone(matrix));
     // Run the problem solver
-    System.out.println("Solving the Greedy Gnome Problem...⏳");
+    System.out.println("Solving the Greedy Gnomes Problem...⏳");
     LoadingIndicator indicator = new LoadingIndicator(); // Init indicator
-    scoutCLI(0, 0, matrix, solution, 0, null, pathBuilder, currentMatrix);
+    scoutCLI(0, 0, matrix, solution, 0, null, pathBuilder, matrix);
     indicator.stop();
     return solution;
   }
@@ -131,7 +104,7 @@ public class ExhaustiveSearch {
    * @param y      Y Coordinate
    * @param matrix Matrix to be scouted
    */
-  public static void scoutCLI(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
+  public static void scoutCLI(int x, int y, String[][] matrix, Solution solution, int currentGold,
       Direction currentDirection, StringBuilder pathBuilder, String[][] currentMatrix) {
     // Check if current trail of path is NOT SAFE!
     if (!MatrixUtils.isSafe(x, y, matrix)) {
@@ -157,11 +130,11 @@ public class ExhaustiveSearch {
       ;
     }
     /// Store the current path's state if it maximizes the gold collected
-    if (currentGold > solution.gold) {
-      solution.gold = currentGold;
-      solution.steps = pathBuilder.length();
-      solution.path = pathBuilder.toString();
-      solution.matrix = MatrixUtils.clone(currentMatrix);
+    if (currentGold > solution.getGold()) {
+      solution.setGold(currentGold);
+      solution.setSteps(pathBuilder.length());
+      solution.setPath(pathBuilder.toString());
+      solution.setMatrix(MatrixUtils.clone(currentMatrix));
     }
     // Go DOWN
     scoutCLI(x + 1, y, matrix, solution, currentGold, Direction.DOWN, pathBuilder, currentMatrix);

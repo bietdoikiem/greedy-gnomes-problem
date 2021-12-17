@@ -6,12 +6,12 @@ import com.RMIT.algorithm.utils.MatrixUtils;
 
 public class Main {
   public static void main(String[] args) throws FileNotFoundException {
-    // File: src/main/resources/sample-3x3.txt
+    // src/main/resources/sample-12x23.txt
     /* * Minh/Exhaustive Search * */
-    // ExhaustiveSearch.OptimalSolution solution =
+    // Solution solution =
     // ExhaustiveSearch.solveCLI(MatrixUtils.parseFromFile(args[0]));
     /* * Minh/Memoization Search * */
-    MemoizationSearch.OptimalSolution solution = MemoizationSearch.solve(MatrixUtils.parseFromFile(args[0]));
+    Solution solution = MemoizationSearch.solveCLI(MatrixUtils.parseFromFile(args[0]));
     /* * Dat/Dynamic Guider * */
     // int[][] matrix = DPTopDown
     // .read_file(args[0]);
@@ -24,10 +24,10 @@ public class Main {
     // String[][] board = es.readFile(inputFile);
     // es.displayBoard(board);
     // es.exhaustiveSearch(board);
-    System.out.println("Optimal Gold 🪙 : " + solution.gold);
-    System.out.println("Optimal Steps 👣 : " + solution.steps);
-    System.out.println("Optimal Path 🧩 : " + solution.path);
-    // MatrixUtils.display(solution.matrix); // (If has solution matrix)
+    System.out.println("Optimal Gold 🪙 : " + solution.getGold());
+    System.out.println("Optimal Steps 👣 : " + solution.getSteps());
+    System.out.println("Optimal Path 🧩 : " + solution.getPath());
+    MatrixUtils.display(solution.getMatrix()); // (If has solution matrix)
   }
 
 }

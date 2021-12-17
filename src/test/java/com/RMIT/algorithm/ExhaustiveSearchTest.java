@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class ExhaustiveSearchTest {
   long startTime;
-  ExhaustiveSearch.OptimalSolution solution;
+  Solution solution;
 
   @Before
   public void start() {
@@ -28,8 +28,8 @@ public class ExhaustiveSearchTest {
     System.out.println("Test case: 3x3 Matrix");
     solution = ExhaustiveSearch
         .solve(MatrixUtils.parseFromFile("src/test/resources/sample-3x3.txt"));
-    assertEquals(6, solution.gold);
-    assertEquals(2, solution.steps);
+    assertEquals(6, solution.getGold());
+    assertEquals(2, solution.getSteps());
   }
 
   @Test
@@ -37,8 +37,8 @@ public class ExhaustiveSearchTest {
     System.out.println("Test case: 9x16 Matrix");
     solution = ExhaustiveSearch
         .solve(MatrixUtils.parseFromFile("src/test/resources/sample-9x16.txt"));
-    assertEquals(27, solution.gold);
-    assertEquals(19, solution.steps);
+    assertEquals(27, solution.getGold());
+    assertEquals(19, solution.getSteps());
   }
 
   @Test
@@ -46,7 +46,7 @@ public class ExhaustiveSearchTest {
     System.out.println("Test case: 12x23 Matrix");
     solution = ExhaustiveSearch
         .solve(MatrixUtils.parseFromFile("src/test/resources/sample-12x23.txt"));
-    assertEquals(18, solution.gold);
-    assertEquals(27, solution.steps);
+    assertEquals(18, solution.getGold());
+    assertEquals(27, solution.getSteps());
   }
 }
