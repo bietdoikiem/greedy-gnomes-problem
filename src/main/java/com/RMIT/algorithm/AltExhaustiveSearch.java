@@ -63,20 +63,16 @@ public class AltExhaustiveSearch {
       return false;
     }
   }
-  // private int countNumberOfPath(int rowIdx, int colIdx){
-  // if (rowIdx==1 || colIdx==1){
-  // return 1;
-  // }
-  // return countNumberOfPath(rowIdx-1, colIdx) +
-  // countNumberOfPath(rowIdx,colIdx-1);
-  // }
 
-  public void findPath(String[][] board, int i, int j, int curScore, int curStep, BruteForceSolution result) {
+  public void findPath(String[][] board, int i, int j, int curScore, int curStep, String curMove, StringBuffer curPath, BruteForceSolution result) {
     // return if it is an invalid path
     if (!isPath(board, i, j)) {
       return;
     }
 
+    if (curMove != null){
+      curPath.append(curMove);
+    }
     // check whether it is the start position or not
     if (i != 0 || j != 0) {
       curStep += 1;
@@ -94,10 +90,16 @@ public class AltExhaustiveSearch {
     if (result.totalScore < curScore) {
       result.totalScore = curScore;
       result.totalStep = curStep;
+      result.finalPath = curPath.toString();
     }
 
-    findPath(board, i + 1, j, curScore, curStep, result);
-    findPath(board, i, j + 1, curScore, curStep, result);
+    findPath(board, i + 1, j, curScore, curStep, "D", curPath, result);
+    findPath(board, i, j + 1, curScore, curStep, "R", curPath, result);
+
+    // if it is not the start position, then backtrack
+    if (curPath.length() != 0) {
+      curPath.deleteCharAt(curPath.length() - 1);
+    }
 
     // mark the unchecked position as "."
     result.mineArea[i][j] = ".";
@@ -106,16 +108,23 @@ public class AltExhaustiveSearch {
 
   public void exhaustiveSearch(String[][] board) {
     BruteForceSolution res = new BruteForceSolution(board.length, board[0].length);
+    StringBuffer curPath = new StringBuffer();
     // initialize the mineArea with all "."
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[0].length; j++) {
         res.mineArea[i][j] = ".";
       }
     }
+
+    long startTime = System.currentTimeMillis();
     // call findPath function to find the shortest path
-    findPath(board, 0, 0, 0, 0, res);
+    findPath(board, 0, 0, 0, 0, null, curPath, res);
+    long stopTime = System.currentTimeMillis();
+    long elapsedTime = stopTime - startTime;
     System.out.println("Steps: " + res.totalStep);
     System.out.println("Golds: " + res.totalScore);
+    System.out.println("Path: " + res.finalPath);
+    System.out.println("Running in: " + elapsedTime + " ms");
   }
 
 }
@@ -124,6 +133,7 @@ class BruteForceSolution {
   String[][] mineArea;
   int totalStep;
   int totalScore;
+  String finalPath;
 
   public BruteForceSolution(int rows, int cols) {
     totalStep = 0;
