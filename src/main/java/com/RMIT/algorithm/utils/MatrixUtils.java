@@ -3,6 +3,7 @@ package com.RMIT.algorithm.utils;
 import java.io.File;
 import java.util.Scanner;
 
+import com.RMIT.algorithm.MemoizationSearch.Sign;
 import com.RMIT.algorithm.configs.Configs;
 import com.RMIT.algorithm.enums.MatrixSymbol;
 
@@ -28,6 +29,20 @@ public class MatrixUtils {
    * @param matrix 2D Array of characters to be displayed
    */
   public static void display(String[][] matrix) {
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        System.out.print(matrix[i][j] + " ");
+      }
+      System.out.print("\n");
+    }
+  }
+
+  /**
+   * Displays the Point matrix in console
+   * 
+   * @param matrix 2D Array of Points to be displayed
+   */
+  public static void display(Sign[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
         System.out.print(matrix[i][j] + " ");

@@ -58,9 +58,13 @@ public class ExhaustiveSearch {
    * Scout the matrix to find all possible paths for Mr. Gnome (only path
    * included)
    * 
-   * @param x      X Coordinate
-   * @param y      Y Coordinate
-   * @param matrix Matrix to be scouted
+   * @param x                X coordinate
+   * @param y                Y coordinate
+   * @param matrix           Problem Matrix
+   * @param solution         Optimal Solution
+   * @param currentGold      Current Collected Gold
+   * @param currentDirection Current Scouting Direction
+   * @param pathBuilder      Current Path String (builder)
    */
   public static void scout(int x, int y, String[][] matrix, OptimalSolution solution, int currentGold,
       Direction currentDirection, StringBuilder pathBuilder) {
