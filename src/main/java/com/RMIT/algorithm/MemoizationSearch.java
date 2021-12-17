@@ -78,9 +78,7 @@ public class MemoizationSearch {
    * @param direction Direction
    * @param matrix    Matrix of the problem
    * @param signs     Signs to show where the most amount of gold can be collected
-   * @return Maximum golds to be collected in the direction that is indicated by
-   *         the
-   *         sign
+   * @return Maximum golds to be collected
    */
   public static int scout(int x, int y, Direction direction,
       String[][] matrix, Sign[][] signs) {
