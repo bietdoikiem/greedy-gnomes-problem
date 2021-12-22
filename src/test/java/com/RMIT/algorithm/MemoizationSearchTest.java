@@ -2,6 +2,8 @@ package com.RMIT.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
+
 import com.RMIT.algorithm.utils.MatrixUtils;
 
 import org.junit.After;
@@ -11,6 +13,7 @@ import org.junit.Test;
 public class MemoizationSearchTest {
   long startTime;
   Solution solution;
+  
 
   @Before
   public void start() {
@@ -49,4 +52,14 @@ public class MemoizationSearchTest {
     assertEquals(18, solution.getGold());
     assertEquals(27, solution.getSteps());
   }
+
+  @Test
+  public void solve_ShouldReturn18GoldAnd27Steps_WhenGiven12x23Matrix1() throws FileNotFoundException {
+    System.out.println("Test case(Thien): 12x23 Matrix");
+    solution = DPTopDown.solve("src/test/resources/sample-12x23.txt");
+    assertEquals(18, solution.getGold());
+    assertEquals(27, solution.getSteps());
+  }
+
+  
 }
