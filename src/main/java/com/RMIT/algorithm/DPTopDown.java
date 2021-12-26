@@ -5,7 +5,6 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.ArrayList;
 import java.util.Scanner; // Import the Scanner class to read text files
 
-
 public class DPTopDown {
   // Number of rows, columns and steps
   static int numberRows = 0, numberColumns = 0, steps = 0;
@@ -51,21 +50,6 @@ public class DPTopDown {
     return inputArray;
   }
 
-  // static void print_array(int[][] arr) {
-  //   for (int i = 0; i < n_rows; i++) {
-  //     for (int j = 0; j < n_columns; j++) {
-  //       if (arr[i][j] == 0) {
-  //         System.out.print("XX ");
-  //       } else if (arr[i][j] < 10)
-  //         System.out.print(arr[i][j] + "  ");
-  //       else
-  //         System.out.print(arr[i][j] + " ");
-  //     }
-  //     System.out.println();
-  //   }
-
-  // }
-
   static int findPath(int row, int column) {
     // Base case
     if (tempMaxGold[row + 1][column] == 0 && tempMaxGold[row][column + 1] == 0)
@@ -106,8 +90,8 @@ public class DPTopDown {
     // the calls and updating it.
     if (row < numberRows - 1 && column < numberColumns - 1 && inputMatrix[row][column] != -1) {
       int current_sum = Math.max(
-        findMaximumGold(row, column + 1, inputMatrix),
-        findMaximumGold(row + 1, column, inputMatrix));
+          findMaximumGold(row, column + 1, inputMatrix),
+          findMaximumGold(row + 1, column, inputMatrix));
       total_sum = inputMatrix[row][column] + current_sum;
 
     }
@@ -132,27 +116,29 @@ public class DPTopDown {
 
   // Driver Code
   public static Solution solve(String inputFile) throws FileNotFoundException {
-    
+
     // try {
-        
-      // long startTime = System.currentTimeMillis();
-      // Calling the implemented function
-      // int result = maximum_sum_path(0, 0, a);
-      // System.out.println("Optimal Gold 🪙 : " + result);
-      // System.out.println("Optimal Steps 👣 : " + find_path(0, 0));
-      // System.out.println("Optimal Path 🧩 : " + path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
-      
-      // print_array(path_arr);
+
+    // long startTime = System.currentTimeMillis();
+    // Calling the implemented function
+    // int result = maximum_sum_path(0, 0, a);
+    // System.out.println("Optimal Gold 🪙 : " + result);
+    // System.out.println("Optimal Steps 👣 : " + find_path(0, 0));
+    // System.out.println("Optimal Path 🧩 : " +
+    // path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
+
+    // print_array(path_arr);
     // } catch (FileNotFoundException e) {
-    //   e.printStackTrace();
+    // e.printStackTrace();
     // }
-    Solution solution = new Solution(findMaximumGold(0, 0, readInputFile(inputFile)), 
-    findPath(0, 0),path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
-    
+    Solution solution = new Solution(findMaximumGold(0, 0, readInputFile(inputFile)),
+        findPath(0, 0), path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
+
     // System.out.println("Optimal Gold 🪙 : " + solution.getGold());
-    //   System.out.println("Optimal Steps 👣 : " + solution.getSteps());
+    // System.out.println("Optimal Steps 👣 : " + solution.getSteps());
     // System.out
-    //       .println(String.format("DONE! Time elapsed: %fs", (System.currentTimeMillis() - startTime) / 1000F));
+    // .println(String.format("DONE! Time elapsed: %fs", (System.currentTimeMillis()
+    // - startTime) / 1000F));
     return solution;
 
   }
