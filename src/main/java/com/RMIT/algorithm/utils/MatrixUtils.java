@@ -130,6 +130,54 @@ public class MatrixUtils {
     return null;
   }
 
+  public static int[][] intMatrixFromFile(String path) {
+    try {
+      File file = new File(path);
+      Scanner sc = new Scanner(file);
+      // Read rows & columns in the 1st line of file
+      String sizeData = sc.nextLine();
+      String[] sizeStr = sizeData.split(" ");
+      // Validate acceptable rows & columns
+      int rows = StringUtils.parseInt(sizeStr[0]);
+      int cols = StringUtils.parseInt(sizeStr[1]);
+      if (rows > Configs.getMaxRows() || cols > Configs.getMaxCols()) {
+        sc.close();
+        throw new Error("MATRIX ERROR! Given matrix has exceeded the maximum allowance size (27, 27)");
+      }
+      // Init matrix 2D Array
+      int[][] matrix = new int[rows][cols];
+      int currentRow = 0;
+      // Read the remaining lines for matrix data
+      while (sc.hasNextLine()) {
+        String data = sc.nextLine();
+        String[] tokens = data.split(" ");
+        // Fill the matrix
+        for (int i = 0; i < tokens.length; i++) {
+          if (!isValidMatrixSymbol(tokens[i])) {
+            sc.close();
+            throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+          }
+          if (tokens[i].equals("x") ){
+            matrix[currentRow][i] = -1;
+          }
+          else if (tokens[i].equals(".")){
+            matrix[currentRow][i] = 0;
+          }
+          else {
+            matrix[currentRow][i] = StringUtils.parseInt(tokens[i]);
+          }
+        }
+        currentRow++;
+      }
+      sc.close();
+      return matrix;
+    } catch (Exception e) {
+      System.out.println(String.format("MATRIX ERROR! Cannot read file %s", e.getMessage()));
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   /**
    * Check if the matrix contain valid symbols
    * 
