@@ -7,23 +7,38 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class DPTopDown {
   // Number of rows, columns and steps
-  static int numberRows = 0, numberColumns = 0, steps = 0;
+  static int numberRows = 0, numberColumns = 0, steps = 0, currentFoundGold = 0, totalGold = 0;
   static ArrayList<Character> path = new ArrayList<Character>();
 
   // Variable temp_max_sum is used to store maximum sum till current position
-  static int tempMaxGold[][] = new int[27][27];
+  // static int tempMaxGold[][] = new int[27][27];
 
   // Variable visited is used to keep track of all the visited positions
-  static int visitedPos[][] = new int[27][27];
+  // static int visitedPos[][] = new int[27][27];
 
   // Variable path_arr is used to store the maximum path
-  static int pathMap[][] = new int[27][27];
+  // static int pathMap[][] = new int[27][27];
+
+  public static class VisitedSign {
+    public int tempGold;
+    public boolean isVisited;
+
+    public VisitedSign(int tempGold, Boolean isVisited) {
+      this.tempGold = tempGold;
+      this.isVisited = isVisited;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%d%s", tempGold, isVisited);
+    }
+  }
 
   // For storing current sum
-  static int currentFoundGold = 0;
+  // static int ;
 
   // For continuous update of maximum sum required
-  static int totalGold = 0;
+  // static int ;
 
   static int[][] readInputFile(String fileName) throws FileNotFoundException {
     Scanner myReader = new Scanner(new File(fileName));
@@ -50,36 +65,36 @@ public class DPTopDown {
     return inputArray;
   }
 
-  static int findPath(int row, int column) {
+  static int findPath(int row, int column, VisitedSign[][] sign) {
     // Base case
-    if (tempMaxGold[row + 1][column] == 0 && tempMaxGold[row][column + 1] == 0)
+    if (sign[row + 1][column].tempGold == 0 && sign[row][column + 1].tempGold == 0)
       return 1;
-    if (tempMaxGold[row + 1][column] >= tempMaxGold[row][column + 1]) {
-      pathMap[row + 1][column] = 1;
+    if (sign[row + 1][column].tempGold >= sign[row][column + 1].tempGold) {
+      // pathMap[row + 1][column] = 1;
       path.add('D');
       steps++;
-      findPath(row + 1, column);
+      findPath(row + 1, column, sign);
     } else {
-      pathMap[row][column + 1] = 1;
+      // pathMap[row][column + 1] = 1;
       path.add('R');
       steps++;
-      findPath(row, column + 1);
+      findPath(row, column + 1, sign);
     }
     return steps;
   }
 
   // Function to calculate maximum sum of path
-  static int findMaximumGold(int row, int column, int[][] inputMatrix) {
+  static int findMaximumGold(int row, int column, int[][] inputMatrix, VisitedSign[][] sign) {
     // Checking boundary condition
     if (row == numberRows - 1 && column == numberColumns - 1 && inputMatrix[row][column] != -1)
       return inputMatrix[row][column];
 
     // Checking whether or not a(row, column) is visited
-    if (visitedPos[row][column] != 0 && inputMatrix[row][column] != -1)
-      return tempMaxGold[row][column];
+    if (sign[row][column] != null && inputMatrix[row][column] != -1)
+      return sign[row][column].tempGold;
 
     // Marking a(row, column) is visited
-    visitedPos[row][column] = 1;
+    sign[row][column] = new VisitedSign(0, true);
 
     int total_sum = 0;
 
@@ -90,8 +105,8 @@ public class DPTopDown {
     // the calls and updating it.
     if (row < numberRows - 1 && column < numberColumns - 1 && inputMatrix[row][column] != -1) {
       int current_sum = Math.max(
-          findMaximumGold(row, column + 1, inputMatrix),
-          findMaximumGold(row + 1, column, inputMatrix));
+          findMaximumGold(row, column + 1, inputMatrix, sign),
+          findMaximumGold(row + 1, column, inputMatrix, sign));
       total_sum = inputMatrix[row][column] + current_sum;
 
     }
@@ -99,16 +114,16 @@ public class DPTopDown {
     // Checking whether position
     // has reached last row
     else if (row == numberRows - 1 & inputMatrix[row][column] != -1) {
-      total_sum = inputMatrix[row][column] + findMaximumGold(row, column + 1, inputMatrix);
+      total_sum = inputMatrix[row][column] + findMaximumGold(row, column + 1, inputMatrix, sign);
     }
 
     // If the position is in the last column
     else if (inputMatrix[row][column] != -1) {
-      total_sum = inputMatrix[row][column] + findMaximumGold(row + 1, column, inputMatrix);
+      total_sum = inputMatrix[row][column] + findMaximumGold(row + 1, column, inputMatrix, sign);
     }
 
     // Updating the maximum sum till the current position in the temp_max_sum
-    tempMaxGold[row][column] = total_sum;
+    sign[row][column].tempGold = total_sum;
 
     // Returning the updated maximum value
     return total_sum;
@@ -131,8 +146,18 @@ public class DPTopDown {
     // } catch (FileNotFoundException e) {
     // e.printStackTrace();
     // }
-    Solution solution = new Solution(findMaximumGold(0, 0, readInputFile(inputFile)),
-        findPath(0, 0), path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
+    int[][] a = readInputFile(inputFile);
+    // System.out.println("rows is " + numberRows + ", columns is " +
+    // numberColumns);
+    VisitedSign[][] mySign = new VisitedSign[numberRows][numberColumns];
+    // for (int i = 0; i < mySign.length; i++) {
+    // for (int j = 0; j < i; j++) {
+    // System.out.println(mySign[i][j]);
+    // }
+
+    // }
+    Solution solution = new Solution(findMaximumGold(0, 0, a, mySign),
+        findPath(0, 0, mySign), path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
 
     // System.out.println("Optimal Gold 🪙 : " + solution.getGold());
     // System.out.println("Optimal Steps 👣 : " + solution.getSteps());
