@@ -53,13 +53,6 @@ public class MemoizationSearchTest {
     assertEquals(27, solution.getSteps());
   }
 
-  @Test
-  public void solve_ShouldReturn18GoldAnd27Steps_WhenGiven12x23Matrix1() throws FileNotFoundException {
-    System.out.println("Test case(Thien): 12x23 Matrix");
-    solution = DPTopDown.solve("src/test/resources/sample-12x23.txt");
-    assertEquals(18, solution.getGold());
-    assertEquals(27, solution.getSteps());
-  }
 
   
 }

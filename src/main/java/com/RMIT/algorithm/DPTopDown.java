@@ -116,29 +116,8 @@ public class DPTopDown {
 
   // Driver Code
   public static Solution solve(String inputFile) throws FileNotFoundException {
-
-    // try {
-
-    // long startTime = System.currentTimeMillis();
-    // Calling the implemented function
-    // int result = maximum_sum_path(0, 0, a);
-    // System.out.println("Optimal Gold 🪙 : " + result);
-    // System.out.println("Optimal Steps 👣 : " + find_path(0, 0));
-    // System.out.println("Optimal Path 🧩 : " +
-    // path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
-
-    // print_array(path_arr);
-    // } catch (FileNotFoundException e) {
-    // e.printStackTrace();
-    // }
     Solution solution = new Solution(findMaximumGold(0, 0, readInputFile(inputFile)),
         findPath(0, 0), path.toString().replaceAll("\\[|\\]|,", "").replace("\s", ""));
-
-    // System.out.println("Optimal Gold 🪙 : " + solution.getGold());
-    // System.out.println("Optimal Steps 👣 : " + solution.getSteps());
-    // System.out
-    // .println(String.format("DONE! Time elapsed: %fs", (System.currentTimeMillis()
-    // - startTime) / 1000F));
     return solution;
 
   }
