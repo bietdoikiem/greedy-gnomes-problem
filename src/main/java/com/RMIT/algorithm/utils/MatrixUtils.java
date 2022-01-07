@@ -110,7 +110,7 @@ public class MatrixUtils {
       // Read the remaining lines for matrix data
       while (sc.hasNextLine()) {
         String data = sc.nextLine();
-        if (!data.isEmpty()){
+        if (!data.isEmpty()) {
           String[] tokens = data.split(" ");
           // Fill the matrix
           for (int i = 0; i < tokens.length; i++) {
@@ -159,13 +159,11 @@ public class MatrixUtils {
             sc.close();
             throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
           }
-          if (tokens[i].equals("x") ){
+          if (tokens[i].equals("x")) {
             matrix[currentRow][i] = -1;
-          }
-          else if (tokens[i].equals(".")){
+          } else if (tokens[i].equals(".")) {
             matrix[currentRow][i] = 0;
-          }
-          else {
+          } else {
             matrix[currentRow][i] = StringUtils.parseInt(tokens[i]);
           }
         }
