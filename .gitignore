@@ -2,6 +2,7 @@
 .vscode/
 
 ### INTELLIJ ###
+**/.DS_Store
 .idea
 *.iws
 *.iml
