@@ -65,8 +65,10 @@ public class ExhaustiveSearch {
     // Go RIGHT
     scout(x, y + 1, matrix, solution, currentGold, Direction.RIGHT, pathBuilder);
     // Backtrack visited paths
-    if (pathBuilder.length() > 0)
-      pathBuilder.deleteCharAt(pathBuilder.length() - 1);
+    if (pathBuilder.length() > 0) {
+      // Remove last character from the internal buffer of string
+      pathBuilder.setLength(pathBuilder.length() - 1);
+    }
   }
 
 }
