@@ -195,22 +195,24 @@ public class MatrixUtils {
       // Read the remaining lines for matrix data
       while (sc.hasNextLine()) {
         String data = sc.nextLine();
-        String[] tokens = data.split(" ");
-        // Fill the matrix
-        for (int i = 0; i < tokens.length; i++) {
-          if (!isValidMatrixSymbol(tokens[i])) {
-            sc.close();
-            throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+        if (!data.isEmpty()){
+          String[] tokens = data.split(" ");
+          // Fill the matrix
+          for (int i = 0; i < tokens.length; i++) {
+            if (!isValidMatrixSymbol(tokens[i])) {
+              sc.close();
+              throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+            }
+            if (tokens[i].equalsIgnoreCase(MatrixSymbol.ROCK.toString())) {
+              matrix[currentRow][i] = -1;
+            } else if (tokens[i].equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())) {
+              matrix[currentRow][i] = 0;
+            } else {
+              matrix[currentRow][i] = StringUtils.parseInt(tokens[i]);
+            }
           }
-          if (tokens[i].equalsIgnoreCase(MatrixSymbol.ROCK.toString())) {
-            matrix[currentRow][i] = -1;
-          } else if (tokens[i].equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())) {
-            matrix[currentRow][i] = 0;
-          } else {
-            matrix[currentRow][i] = StringUtils.parseInt(tokens[i]);
-          }
+          currentRow++;
         }
-        currentRow++;
       }
       sc.close();
       return matrix;
