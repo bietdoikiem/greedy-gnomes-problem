@@ -110,16 +110,18 @@ public class MatrixUtils {
       // Read the remaining lines for matrix data
       while (sc.hasNextLine()) {
         String data = sc.nextLine();
-        String[] tokens = data.split(" ");
-        // Fill the matrix
-        for (int i = 0; i < tokens.length; i++) {
-          if (!isValidMatrixSymbol(tokens[i])) {
-            sc.close();
-            throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+        if (!data.isEmpty()){
+          String[] tokens = data.split(" ");
+          // Fill the matrix
+          for (int i = 0; i < tokens.length; i++) {
+            if (!isValidMatrixSymbol(tokens[i])) {
+              sc.close();
+              throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
+            }
+            matrix[currentRow][i] = tokens[i];
           }
-          matrix[currentRow][i] = tokens[i];
+          currentRow++;
         }
-        currentRow++;
       }
       sc.close();
       return matrix;
