@@ -1,11 +1,11 @@
-package com.RMIT.algorithm.utils;
+package com.RMIT.assignment.utils;
 
 import java.io.File;
 import java.util.Scanner;
 
-import com.RMIT.algorithm.MemoizationSearch.Sign;
-import com.RMIT.algorithm.configs.Configs;
-import com.RMIT.algorithm.enums.MatrixSymbol;
+import com.RMIT.assignment.components.Sign;
+import com.RMIT.assignment.configs.Configs;
+import com.RMIT.assignment.enums.MatrixSymbol;
 
 public class MatrixUtils {
 
@@ -24,11 +24,39 @@ public class MatrixUtils {
   }
 
   /**
-   * Displays the matrix in console
+   * Returns matrix size in array: 1st element is no. of rows & 2nd element is no.
+   * columns
+   * 
+   * @param matrix Matrix of characters
+   * @return Array of matrix size with 2 elements: rows, columns
+   */
+  public static int[] getSize(int[][] matrix) {
+    int[] size = new int[2];
+    size[0] = matrix.length;
+    size[1] = matrix[0].length;
+    return size;
+  }
+
+  /**
+   * Displays the matrix (String) in console
    * 
    * @param matrix 2D Array of characters to be displayed
    */
   public static void display(String[][] matrix) {
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        System.out.print(matrix[i][j] + " ");
+      }
+      System.out.print("\n");
+    }
+  }
+
+  /**
+   * Displays the matrix (Integer) in console
+   * 
+   * @param matrix 2D Array of characters to be displayed
+   */
+  public static void display(int[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
         System.out.print(matrix[i][j] + " ");
@@ -67,6 +95,21 @@ public class MatrixUtils {
   }
 
   /**
+   * Clones the provided matrix
+   * 
+   * @param src Source matrix
+   * @return A new clone of the provided matrix
+   */
+  public static int[][] clone(int[][] src) {
+    int length = src.length;
+    int[][] target = new int[length][src[0].length];
+    for (int i = 0; i < length; i++) {
+      System.arraycopy(src[i], 0, target[i], 0, src[i].length);
+    }
+    return target;
+  }
+
+  /**
    * Fills the matrix with content whose data type is String
    * 
    * @param matrix  Matrix to be filled
@@ -90,7 +133,7 @@ public class MatrixUtils {
    * @param path File's path
    * @return String Matrix
    */
-  public static String[][] parseFromFile(String path) {
+  public static String[][] parseStringFromFile(String path) {
     try {
       File file = new File(path);
       Scanner sc = new Scanner(file);
@@ -132,7 +175,7 @@ public class MatrixUtils {
     return null;
   }
 
-  public static int[][] intMatrixFromFile(String path) {
+  public static int[][] parseIntFromFile(String path) {
     try {
       File file = new File(path);
       Scanner sc = new Scanner(file);
@@ -159,9 +202,9 @@ public class MatrixUtils {
             sc.close();
             throw new Error("MATRIX ERROR! Matrix contains illegal symbol " + "\"" + tokens[i] + "\"");
           }
-          if (tokens[i].equals("x")) {
+          if (tokens[i].equalsIgnoreCase(MatrixSymbol.ROCK.toString())) {
             matrix[currentRow][i] = -1;
-          } else if (tokens[i].equals(".")) {
+          } else if (tokens[i].equalsIgnoreCase(MatrixSymbol.UNVISITED.toString())) {
             matrix[currentRow][i] = 0;
           } else {
             matrix[currentRow][i] = StringUtils.parseInt(tokens[i]);
@@ -200,10 +243,10 @@ public class MatrixUtils {
    * @param matrix Matrix to be checked
    * @return True if safe || False if not
    */
-  public static boolean isSafe(int x, int y, String[][] matrix) {
+  public static boolean isSafe(int x, int y, int[][] matrix) {
     int[] matrixSize = MatrixUtils.getSize(matrix);
     return x >= 0 && y >= 0 && x < matrixSize[0] && y < matrixSize[1]
-        && !matrix[x][y].equalsIgnoreCase(MatrixSymbol.ROCK.toString());
+        && matrix[x][y] != -1;
   }
 
   /**

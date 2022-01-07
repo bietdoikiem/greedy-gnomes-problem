@@ -1,4 +1,4 @@
-package com.RMIT.algorithm;
+package com.RMIT.assignment.components;
 
 /**
  * Class for the optimal solution of the problem
@@ -7,7 +7,7 @@ public class Solution {
   private int gold;
   private int steps;
   private String path;
-  private String[][] matrix; // Solution matrix (for visualization)
+  private int[][] matrix; // Solution matrix (for visualization)
 
   public Solution() {
   }
@@ -32,7 +32,7 @@ public class Solution {
    * @param cols
    */
   public Solution(int rows, int cols) {
-    matrix = new String[rows][cols];
+    matrix = new int[rows][cols];
   }
 
   /**
@@ -94,7 +94,7 @@ public class Solution {
    * 
    * @return
    */
-  public String[][] getMatrix() {
+  public int[][] getMatrix() {
     return this.matrix;
   }
 
@@ -103,7 +103,7 @@ public class Solution {
    * 
    * @return
    */
-  public void setMatrix(String[][] matrix) {
+  public void setMatrix(int[][] matrix) {
     this.matrix = matrix;
   }
 }

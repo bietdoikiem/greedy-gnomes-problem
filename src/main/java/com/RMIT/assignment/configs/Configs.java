@@ -1,4 +1,4 @@
-package com.RMIT.algorithm.configs;
+package com.RMIT.assignment.configs;
 
 public class Configs {
   private static final int MATRIX_MAX_ROWS = 27;

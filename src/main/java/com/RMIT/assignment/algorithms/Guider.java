@@ -1,4 +1,4 @@
-package com.RMIT.algorithm;
+package com.RMIT.assignment.algorithms;
 
 import java.util.ArrayList;
 

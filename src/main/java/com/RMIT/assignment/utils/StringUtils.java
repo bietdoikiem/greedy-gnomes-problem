@@ -1,4 +1,4 @@
-package com.RMIT.algorithm.utils;
+package com.RMIT.assignment.utils;
 
 public class StringUtils {
 

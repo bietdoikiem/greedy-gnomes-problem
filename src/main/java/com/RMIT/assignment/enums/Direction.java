@@ -1,4 +1,4 @@
-package com.RMIT.algorithm.enums;
+package com.RMIT.assignment.enums;
 
 public enum Direction {
   DOWN("D"),
