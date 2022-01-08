@@ -2,7 +2,6 @@ package com.RMIT.assignment.algorithms;
 
 import com.RMIT.assignment.components.Sign;
 import com.RMIT.assignment.components.Solution;
-import com.RMIT.assignment.components.TimeIndicator;
 import com.RMIT.assignment.enums.Direction;
 import com.RMIT.assignment.utils.MatrixUtils;
 
@@ -19,7 +18,6 @@ public class MemoizationSearch {
    * @return Optimal solution
    */
   public static Solution solve(int[][] matrix) {
-    TimeIndicator indicator = new TimeIndicator(); // Init indicator
     // Retrieve matrix's no. of rows & columns
     int[] matrixSize = MatrixUtils.getSize(matrix);
     // Init matrix of direction signs
@@ -33,7 +31,6 @@ public class MemoizationSearch {
     buildPath(0, 0, signs, path);
     // Construct solution
     Solution solution = new Solution(mostGold, path.length(), path.toString());
-    indicator.stop();
     return solution;
   }
 

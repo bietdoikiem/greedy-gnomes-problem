@@ -1,7 +1,6 @@
 package com.RMIT.assignment.algorithms;
 
 import com.RMIT.assignment.components.Solution;
-import com.RMIT.assignment.components.TimeIndicator;
 import com.RMIT.assignment.enums.Direction;
 import com.RMIT.assignment.utils.MatrixUtils;
 
@@ -18,13 +17,11 @@ public class ExhaustiveSearch {
    * @param matrix
    */
   public static Solution solve(int[][] matrix) {
-    TimeIndicator indicator = new TimeIndicator(); // Init indicator
     Solution solution = new Solution();
     StringBuilder pathBuilder = new StringBuilder();
     // Run the problem solver
     System.out.println("Solving...⏳");
     scout(0, 0, matrix, solution, 0, null, pathBuilder);
-    indicator.stop(); // Stop indicator upon finishing
     return solution;
   }
 

@@ -15,14 +15,19 @@ public class Menu {
     Scanner sc = new Scanner(System.in);
     System.out.print("Your option: ");
     String option = sc.nextLine();
+    TimeIndicator indicator; // init indicator
     Solution solution; // Init solution
     switch (option) {
       case "1":
+        indicator = new TimeIndicator(); // Init indicator
         solution = ExhaustiveSearch.solve(MatrixUtils.parseIntFromFile(filename));
+        indicator.stop();
         displaySolution(solution);
         break;
       case "2":
+        indicator = new TimeIndicator(); // Init indicator
         solution = MemoizationSearch.solve(MatrixUtils.parseIntFromFile(filename));
+        indicator.stop();
         displaySolution(solution);
         break;
       case "0":
@@ -35,6 +40,11 @@ public class Menu {
     sc.close();
   }
 
+  /**
+   * Display the solution object in the console
+   * 
+   * @param solution Solution of solved matrix
+   */
   private static void displaySolution(Solution solution) {
     System.out.println("Optimal Gold 🪙 : " + solution.getGold());
     System.out.println("Optimal Steps 👣 : " + solution.getSteps());
