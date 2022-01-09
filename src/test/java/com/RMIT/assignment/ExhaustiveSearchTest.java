@@ -18,6 +18,7 @@ public class ExhaustiveSearchTest {
         .solve(MatrixUtils.parseIntFromFile("src/test/resources/sample-3x3.txt"));
     assertEquals(6, solution.getGold());
     assertEquals(2, solution.getSteps());
+    System.out.println("Test DONE!");
   }
 
   @Test
@@ -27,6 +28,7 @@ public class ExhaustiveSearchTest {
         .solve(MatrixUtils.parseIntFromFile("src/test/resources/sample-9x16.txt"));
     assertEquals(27, solution.getGold());
     assertEquals(19, solution.getSteps());
+    System.out.println("Test DONE!");
   }
 
   @Test
@@ -36,5 +38,6 @@ public class ExhaustiveSearchTest {
         .solve(MatrixUtils.parseIntFromFile("src/test/resources/sample-12x23.txt"));
     assertEquals(18, solution.getGold());
     assertEquals(27, solution.getSteps());
+    System.out.println("Test DONE!");
   }
 }
