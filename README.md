@@ -99,7 +99,7 @@ Thus, the Big-O complexity of the scout function can be reduced to the exponenti
 With respect to Dynamic Programing Top-Down approach, our team has visualized the process step by step through figure 3. Imaging there are two people who are gold diggers, both can move down and right direction. Specifically, person 1 who is holding red flat will start the journey and he must move down direction first; for person 2 who is holding green flat goes in right direction. At each point, 2 gold diggers can scout the next right or down point for discovering rocks or edges as well as discover how many golds at their standing positions. If there is no available way to go, the gold digger marks the position by the flat as well as note down how many pieces of gold they have found so far on these flats, then gradually go back to the starting position. After person 1 has finished the trip, person 2 can start and if there is a red flat, person 2 will not need to go the direction that has the flat anymore. Similarly with person 1, if there is no available way to go, person 2 will go back to the beginning position and on the way, person 2 will mark the position and count collected gold.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/54904166/148689964-d2cb9d8f-dcc0-4a44-810c-01dc40f8240a.png" style="width:50%;height:50%">
+<img src="https://user-images.githubusercontent.com/54904166/148690853-48b76700-ddf6-415d-b478-177666c758b2.png" style="width:50%;height:50%">
 </p>
 
 **2.2 Pseudo code**
@@ -157,6 +157,33 @@ RETURN TotalGold
 ```
 
 **2.3 Complexity analysis**
+
+***RightGold Calculation***: Since this calculation mean that the function will be called to calculate for points at location 
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54904166/148691005-bf877dbf-677e-426e-8944-9b1ae2305f76.png" style="width:20%;height:20%">
+</p>
+
+
+which mean that they will located within the calculated map(p,q) so the total RightGold calculation will be q×b
+
+***DownGold Calculation***: The DownGold Calculation will result in a list of dependent calculation presented by this equation: 
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54904166/148691060-d242a367-6cf4-4a5c-be78-563352343cb4.png" style="width:30%;height:30%">
+</p>
+, which mean that the first operation need to be completed will be the equations at Position(1,q-1) which has its DownGold calculation is the Scout function alled on an invalid map position, resulted in the b operation cost for that specific coordinate. After we saved the results of the bottom map position and begin to trackback, everytime the DownGold calculation will called the function on a computed cell, which resulted in the cost of b for each case. Therefore the total operation cost for DownGold is q×b.
+
+Combined them together:
+ T(p+1,q)=(a+2b)×p×q+a×q+b×q+b×q
+ 
+Which mean:
+ T(p+1,q)=(a+2b)×q×(p+1)
+ 
+So that the time complexity of the horizontal extension case obey the initial rules, which conflict which the assumption ( What need to be proof) 
+Therefore, **T(m,n) = C×m×n or O(m,n) = m×n**.
+
+
 
 
 ## III. Conclusion
