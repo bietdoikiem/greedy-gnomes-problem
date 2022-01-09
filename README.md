@@ -8,21 +8,27 @@
 
 ## I. Problem description
 The group assignment in COSC2658 course requires our group to implement two different algorithms with different strategies in the Java programming language to solve Greedy Gnomes Problem. Specifically, our Mr Gnome will traverse through the mine area, represented under a matrix with a maximum of twenty-seven (27) rows and columns, as indicated in the figure below.
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54904166/148689643-68b4232c-8464-4d08-88e6-9af782f2de11.png"></img>
+</p>
 
 Given the matrix, Mr. Gnome needs to find the path, including the number of steps, from the starting point (X-axis at 0, Y-axis at 0) in which he will maximize his total amount of gold collected while avoiding obstacles like rocks (the "X" symbol) on the way. However, due to the constraint of the challenge, heading towards the down or right direction upon each step are the only viable options. On the other hand, many optimal paths could co-exist in one mine area; thus, picking one of the optimal paths is the only required solution to this particular problem.
 ## II. Approach
 
 ### 1. Exhaustive Search
 
-1.1 Algorithm description
+**1.1 Algorithm description**
 
 The Exhaustive Search approach is the first proposed algorithm that aims to search for the optimal path with the most collected gold on the given mine area. The algorithm's underlying mechanism obviously remains exhaustive, which means that the accumulation of gold collected is calculated for every valid path on the matrix and then compared with others to find the maximum number. Upon obtaining the maximum, the path's directions, down or right, are also being tracked on every possible state generated.
 Concretely, a backtracking technique that checks all possibilities and verifies whether the requirements are obtained is ideally used to find the optimal result among a set of all feasible solutions. Besides, the team has also defined a safe path is when it satisfies the boundary conditions, which means the current position's row and column coordinate are greater than or equal to zero (0) and less than the number of rows and columns of the matrix, and the current position of that path must not be a rock as well.
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54904166/148689857-2a1f2661-a3f7-48aa-a5a6-02dbbb72dbaf.jpg" style="width:400px;height:500px">
+</p>
 To deeply understand how the algorithm works, the team has visualized the process of running the exhaustive search algorithm in detail (Figure 2). According to the statement of the problem, there are two way to traverse, that are going right (R) or going down (D). The algorithm starts at the point having coordinate of (0,0) then traverses vertically (D) and horizontally (R) until it cannot possibly complete the conditions for a valid path. Intuitively, each state has two options in term of directions, whenever it reaches any of the boundary edges of the matrix or a rock, the backtracking technique will be applied to abandon that partial candidate and continue to find the optimal solution. To be more specific, looking at the figure 2, when the path is RRR, it is obviously that we cannot expand the path to the right; hence, it goes back to the previous state and traverses in a down direction. On the other hand, when reaching gold, the score is cumulatively added to the current gold variable. With a simultaneous, the team also compares the current score with the final score variable and update the final one if the current score is greater than. By doing that, the team can keep track the path's Direction as well as the steps and the number of gold pieces on every state.
 
 
-1.2 Pseudo code
+**1.2 Pseudo code**
 
 ```java
 // Class for constructing solution object
@@ -67,7 +73,8 @@ PRINT solution.path // String of directions for the optimal path
 
 ```
 
-1.3 Complexity analysis
+
+**1.3 Complexity analysis**
 
 The time complexity of the function in the worst possible case, in which no obstacles (rocks) are found in the matrix, could be computed as the following formula:
 T(m + n) = T(m – 1 +  n) + T(m + n – 1) + c*T(1)  
@@ -82,14 +89,20 @@ T(m – 1 + n) = T(m – 1 – 1 + n) + T(m – 1 + n -1) + c*T(1)
 
 Thus, the Big-O complexity of the scout function can be reduced to the exponential of base two. Moreover, with leading-term approximations, the team has ignored the constant coefficient in lower-order. Therefore, the final time complexity of scout function is:
 
-T(m + n) = O(2^(m+n))
+**T(m + n) = O(2^(m+n))**
 
 ### 2. Dynamic Programming
 
-2.1 Algorithm description
+
+**2.1 Algorithm description**
 
 With respect to Dynamic Programing Top-Down approach, our team has visualized the process step by step through figure 3. Imaging there are two people who are gold diggers, both can move down and right direction. Specifically, person 1 who is holding red flat will start the journey and he must move down direction first; for person 2 who is holding green flat goes in right direction. At each point, 2 gold diggers can scout the next right or down point for discovering rocks or edges as well as discover how many golds at their standing positions. If there is no available way to go, the gold digger marks the position by the flat as well as note down how many pieces of gold they have found so far on these flats, then gradually go back to the starting position. After person 1 has finished the trip, person 2 can start and if there is a red flat, person 2 will not need to go the direction that has the flat anymore. Similarly with person 1, if there is no available way to go, person 2 will go back to the beginning position and on the way, person 2 will mark the position and count collected gold.
-2.2 Pseudo code
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54904166/148689964-d2cb9d8f-dcc0-4a44-810c-01dc40f8240a.png" style="width:50%;height:50%">
+</p>
+
+**2.2 Pseudo code**
 
 ```java
 // Class for constructing solution object
@@ -143,7 +156,7 @@ RETURN TotalGold
 
 ```
 
-2.3 Complexity analysis
+**2.3 Complexity analysis**
 
 
 ## III. Conclusion
