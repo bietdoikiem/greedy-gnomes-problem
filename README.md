@@ -148,10 +148,20 @@ IF (DownGold > RightGold)
 TotalGold += DownGold
 Signs[x][y] = new Sign(TotalGold, RIGHT)
 ELSE IF (RightGold> DownGold) 
-TotalGold += DownGold
+TotalGold += RightGold
 Signs[x][y] = new Sign(TotalGold, DOWN)
-// IF (DownGold = RightGold == 0) 
-Signs[x][y] = new Sign(TotalGold, Null)
+// If EQUAL, calculate total gold with DOWN or RIGHT (optional) direction
+// Here we choose DOWN as an option
+totalGold += DownGold
+// Skip initializing sign if totalGold is equal to Zero
+IF (totalGold == 0)
+    RETURN 0
+// If both directions return 0 gold, initializing sign without upcoming direction
+IF (DownGold = RightGold == 0)
+    Signs[x][y] = new Sign(TotalGold, Null)
+    RETURN TotalGold
+// Initializing signs
+Signs[x][y] = new Sign(TotalGold, Direction.DOWN);
 RETURN TotalGold
 
 ```
